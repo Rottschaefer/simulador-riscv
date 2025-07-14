@@ -8,7 +8,6 @@ import java.io.IOException;
 
 
 public class AssemblyParser {
-    private static byte[] memory = new byte[1000];
     protected static HashMap<String, Integer> labels = new HashMap<>();
 
     private static final HashMap<String, Integer> typeSizes = new HashMap<>();
@@ -26,7 +25,7 @@ public class AssemblyParser {
         // System.out.println(labels.get("array"));
 
         for (int i = 0; i < 100; i++) {
-            System.out.println("memory[" + i + "] = " + memory[i]);
+            System.out.println("memory[" + i + "] = " + Memoria.memory[i]);
 
         }
     }
@@ -73,7 +72,7 @@ public class AssemblyParser {
                             System.out.println("Label encontrado: " + labelName + " -> " + textAddress);
                         } else if (!line.isEmpty()) {
                             // Guarda 4 bytes pra cada instrução dentro daquele label
-                            memory[textAddress] = -1;
+                            Memoria.memory[textAddress] = -1;
                             textAddress += 4;
                         }
                         break;
@@ -168,7 +167,7 @@ public class AssemblyParser {
         
         if(dataSize != null) {
             for(int j = 0; j < dataSize; j++){
-                memory[currentAddress] = (byte)(num % 256);
+                Memoria.memory[currentAddress] = (byte)(num % 256);
                 num = num / 256;
                 currentAddress++;
             }
