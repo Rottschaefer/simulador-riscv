@@ -73,6 +73,7 @@ public class AssemblyParser {
                             System.out.println("Label encontrado: " + labelName + " -> " + textAddress);
                         } else if (!line.isEmpty()) {
                             // Guarda 4 bytes pra cada instrução dentro daquele label
+                            memory[textAddress] = -1;
                             textAddress += 4;
                         }
                         break;
@@ -87,49 +88,53 @@ public class AssemblyParser {
             currentSection = "";
 
             for (String line : lines) {
-            line = line.trim();
-            
-            if (line.isEmpty()) continue;
-            if (line.startsWith("#")) continue;
+                line = line.trim();
+                    
+                if (line.isEmpty()) continue;
+                if (line.startsWith("#")) continue;
 
-            if (line.equals(".data")) {
-                currentSection = ".data";
-                continue;
-            }
-            if (line.equals(".text")) {
-                currentSection = ".text";
-                continue;
-            }
+                if (line.equals(".data")) {
+                    currentSection = ".data";
+                    continue;
+                }
+                if (line.equals(".text")) {
+                    currentSection = ".text";
+                    continue;
+                }
 
-            switch (currentSection) {
-                case ".text":
-                    if (line.contains(":")) {
-                        // Só pula o label, não incrementa endereço
-                        continue;
-                    } 
-                    else if (!line.isEmpty()) {
-                        try {
-                            String encodedInstruction = Encoder.encode_asm(line.trim());
-                            System.out.println("Instrução: " + line + " -> " + encodedInstruction);
-                            
-                            //Passa a string pra int. É usado long pq o parseInt com strings muito longas aprsenta erros
-                            int instructionInt = (int)(Long.parseLong(encodedInstruction, 2));
-                            writeData(instructionInt, textAddress, ".word");
-                            
-                            textAddress += 4;
-                        } catch (Exception e) {
-                            System.err.println("Erro ao processar instrução '" + line + "': " + e.getMessage());
+                switch (currentSection) {
+                    case ".text":
+                        if (line.contains(":")) {
+                            // Instrucoes precisam ser alocadas dentro do espaco do label definido no hashmap
+
+                            String label = line.split(":")[0].trim();
+
+                            textAddress = labels.get(label);
+                            continue;
+                        } 
+                        else if (!line.isEmpty()) {
+                            try {
+                                String encodedInstruction = Encoder.encode_asm(line.trim());
+                                System.out.println("Instrução: " + line + " -> " + encodedInstruction);
+                                    
+                                //Passa a string pra int. É usado long pq o parseInt com strings muito longas aprsenta erros
+                                int instructionInt = (int)(Long.parseLong(encodedInstruction, 2));
+                                writeData(instructionInt, textAddress, ".word");
+                                    
+                                textAddress += 4;
+                            } catch (Exception e) {
+                                System.err.println("Erro ao processar instrução '" + line + "': " + e.getMessage());
+                            }
                         }
-                    }
-                    break;
+                        break;
+                }
             }
-        }
-        
-    } catch (IOException e) {
-            System.err.println("Erro ao ler arquivo: " + e.getMessage());
+            
+        } catch (IOException e) {
+                System.err.println("Erro ao ler arquivo: " + e.getMessage());
 
 
-        }
+            }
     }
 
     private static int processDataLine(String line, int currentAddress) throws Exception{
