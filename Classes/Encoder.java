@@ -127,14 +127,26 @@ public class Encoder {
         return encodedInstruction;
     }
 
-    private static String intToBinary(int numero, int bits) {
-
-    int mask = (1 << bits) - 1;
+protected static String intToBinary(int numero, int bits) {
     
-    int resultado = numero & mask;
+    String binary;
     
-    // Converte para binário com o número correto de bits
-    return String.format("%" + bits + "s", Integer.toBinaryString(resultado)).replace(' ', '0');
+    if (bits == 32) {
+        // Para 32 bits, usa Integer.toBinaryString diretamente
+        binary = Integer.toBinaryString(numero);
+    } else {
+        // Para menos bits, usa máscara
+        int mask = (1 << bits) - 1;
+        int resultado = numero & mask;
+        binary = Integer.toBinaryString(resultado);
+    }
+    
+    // Preenche com zeros à esquerda
+    while (binary.length() < bits) {
+        binary = "0" + binary;
+    }
+        
+    return binary;
 }
 
     private static String encode_i(String[] args, InstructionInfo info) throws Exception {
@@ -315,7 +327,6 @@ public class Encoder {
             throw new Exception("Instrução tipo J requer 2 ou 3 argumentos: " + String.join(" ", args));
         }
 
-        System.out.println("Aqui "+imediato);
         
         String instruction = imediato.charAt(19) + imediato.substring(0,9) + imediato.charAt(10) + imediato.substring(11,18) + rd + info.getOpcode();
         return instruction;

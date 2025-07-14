@@ -1,79 +1,75 @@
+package Classes.Estagios;
+
+import java.io.PipedWriter;
 import java.util.List;
+
+import Classes.Memoria;
+import Classes.Pipeline;
 
 // Classe que busca a próxima instrução da memória de instruções usando o PC (Contador de Programa)
 
-public class BuscaInstrucao {
+public class InstructionFetch{
 
-    private int pc;
-    private List<String> memoriaInstrucoes;
-    private String instrucaoAtualTexto;
-    private String instrucaoAtualBinario;
-
-    public BuscaInstrucao(List<String> memoriaInstrucoes) {
-        this.pc = 0;
-        this.memoriaInstrucoes = memoriaInstrucoes;
-    }
 
     // Busca a próxima instrução da memória
-    public String buscar() {
-        if (pc < memoriaInstrucoes.size()) {
-            instrucaoAtualTexto = memoriaInstrucoes.get(pc);
-            instrucaoAtualBinario = Codificador.codificarAsm(instrucaoAtualTexto); // Retorna o binário
-            pc++;
-            return instrucaoAtualBinario;
-        } else {
-            instrucaoAtualTexto = null;
-            throw new IllegalStateException("Fim da memória de instruções.");
-        }
-    }
+    public static void buscaProximaInstrucao() {
 
-    public String getInstrucaoAtualTexto() {
-        return instrucaoAtualTexto;
-    }
+        int pc = Pipeline.getPC();
+        if (pc < 996) {
+            String instrucaoAtual = Memoria.getInstruction(pc);
+            Pipeline.IFID.setIFID(instrucaoAtual);
+            Pipeline.setPc(pc+4);
 
-    public int getPC() {
-        return pc;
     }
+}
 
-    public void setPC(int novoPC) {
-        this.pc = novoPC;
-    }
+    // public String getInstrucaoAtualTexto() {
+    //     return instrucaoAtualTexto;
+    // }
 
-    public boolean temMaisInstrucoes() {
-        return pc < memoriaInstrucoes.size();
-    }
+    // public int getPC() {
+    //     return pc;
+    // }
 
-    // Verifica se há dependência de dados entre a instrução atual e a anterior
-    public boolean temDependenciaDados(String instrucaoAtual, String instrucaoAnterior) {
-        // Exemplo: Verifica se o registrador de destino da instrução anterior é usado como fonte na instrução atual
-        String registradorDestino = getRegistradorDestino(instrucaoAnterior);
-        List<String> registradoresFonte = getRegistradoresFonte(instrucaoAtual);
+    // public void setPC(int novoPC) {
+    //     this.pc = novoPC;
+    // }
 
-        return registradoresFonte.contains(registradorDestino);
-    }
+    // // public boolean temMaisInstrucoes() {
+    // //     return pc < memoriaInstrucoes.size();
+    // // }
 
-    // Detecção de dependência de dados (hazard)
-    public void detectarHazard(String instrucaoAnterior) {
-        String instrucaoAtual = memoriaInstrucoes.get(pc);
-        if (temDependenciaDados(instrucaoAtual, instrucaoAnterior)) {
-            System.out.println("Dependência de dados detectada! Aplicando stall...");
-            // Lógica para pausar o pipeline
-            pc--;
-        }
-    }
+    // // Verifica se há dependência de dados entre a instrução atual e a anterior
+    // public boolean temDependenciaDados(String instrucaoAtual, String instrucaoAnterior) {
+    //     // Exemplo: Verifica se o registrador de destino da instrução anterior é usado como fonte na instrução atual
+    //     String registradorDestino = getRegistradorDestino(instrucaoAnterior);
+    //     List<String> registradoresFonte = getRegistradoresFonte(instrucaoAtual);
 
-    // Métodos auxiliares para extrair registradores (implementação depende do formato das instruções)
-    private String getRegistradorDestino(String instrucao) {
-        // Extrai o registrador de destino da instrução
-        // Implementação depende do formato da instrução
-        String[] partes = instrucao.split(" ");
-        return partes.length > 1 ? partes[1] : null;
-    }
+    //     return registradoresFonte.contains(registradorDestino);
+    // }
 
-    // Extrai os registradores de origem da instrução
-    private List<String> getRegistradoresFonte(String instrucao) {
-        // Implementação depende do formato da instrução
-        String[] partes = instrucao.split(" ");
-        return partes.length > 2 ? List.of(partes[2], partes[3]) : List.of();
-    }
+    // // Detecção de dependência de dados (hazard)
+    // // public void detectarHazard(String instrucaoAnterior) {
+    // //     String instrucaoAtual = memoriaInstrucoes.get(pc);
+    // //     if (temDependenciaDados(instrucaoAtual, instrucaoAnterior)) {
+    // //         System.out.println("Dependência de dados detectada! Aplicando stall...");
+    // //         // Lógica para pausar o pipeline
+    // //         pc--;
+    // //     }
+    // // }
+
+    // // Métodos auxiliares para extrair registradores (implementação depende do formato das instruções)
+    // private String getRegistradorDestino(String instrucao) {
+    //     // Extrai o registrador de destino da instrução
+    //     // Implementação depende do formato da instrução
+    //     String[] partes = instrucao.split(" ");
+    //     return partes.length > 1 ? partes[1] : null;
+    // }
+
+    // // Extrai os registradores de origem da instrução
+    // private List<String> getRegistradoresFonte(String instrucao) {
+    //     // Implementação depende do formato da instrução
+    //     String[] partes = instrucao.split(" ");
+    //     return partes.length > 2 ? List.of(partes[2], partes[3]) : List.of();
+    // }
 }
