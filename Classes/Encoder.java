@@ -117,7 +117,7 @@ public class Encoder {
         return 1;
     }
 
-    public static String intToBinary(int numero, int bits) {
+    private static String intToBinary(int numero, int bits) {
 
     int mask = (1 << bits) - 1;
     
@@ -127,7 +127,7 @@ public class Encoder {
     return String.format("%" + bits + "s", Integer.toBinaryString(resultado)).replace(' ', '0');
 }
 
-    public static String encode_i(String[] args, InstructionInfo info){
+    private static String encode_i(String[] args, InstructionInfo info){
         
         String imediato = intToBinary(Integer.parseInt(args[3]), 12);
         String rs1 = intToBinary(registerMap.get(args[2]), 5);
@@ -139,7 +139,7 @@ public class Encoder {
         return instruction;
     }
     
-    public static String encode_r(String[] args, InstructionInfo info){
+    private static String encode_r(String[] args, InstructionInfo info){
         // Formato R: funct7[6:0] rs2[4:0] rs1[4:0] funct3[2:0] rd[4:0] opcode[6:0]
         String rs2 = intToBinary(registerMap.get(args[3]), 5);
         String rs1 = intToBinary(registerMap.get(args[2]), 5);
@@ -149,7 +149,7 @@ public class Encoder {
         return instruction;
     }
     
-    public static String encode_s(String[] args, InstructionInfo info){
+    private static String encode_s(String[] args, InstructionInfo info){
         // Formato S: imm[11:5] rs2[4:0] rs1[4:0] funct3[2:0] imm[4:0] opcode[6:0]
         int imediato = Integer.parseInt(args[3]);
         String imm_11_5 = intToBinary((imediato >> 5) & 0x7F, 7);  
@@ -161,7 +161,7 @@ public class Encoder {
         return instruction;
     }
     
-    public static String encode_b(String[] args, InstructionInfo info){
+    private static String encode_b(String[] args, InstructionInfo info){
         // Formato B: imm[12|10:5] rs2[4:0] rs1[4:0] funct3[2:0] imm[4:1|11] opcode[6:0]
         String imediato = intToBinary(Integer.parseInt(args[3]), 12);
         String rs2 = intToBinary(registerMap.get(args[2]), 5);
@@ -172,7 +172,7 @@ public class Encoder {
         return instruction;
     }
     
-    public static String encode_j(String[] args, InstructionInfo info){
+    private static String encode_j(String[] args, InstructionInfo info){
         // Formato J: imm[20|10:1|11|19:12] rd[4:0] opcode[6:0]
         String imediato = intToBinary(Integer.parseInt(args[2]), 20);
         String rd = intToBinary(registerMap.get(args[1]), 5);
