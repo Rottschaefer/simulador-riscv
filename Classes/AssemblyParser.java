@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class AssemblyParser {
     private static byte[] memory = new byte[1000];
-    private static HashMap<String, Integer> labels = new HashMap<>();
+    protected static HashMap<String, Integer> labels = new HashMap<>();
 
     private static final HashMap<String, Integer> typeSizes = new HashMap<>();
     static {
@@ -23,9 +23,9 @@ public class AssemblyParser {
         
         parseFile("exemplo.asm"); //Caminho aqui tem que ser relativo à pasta aonde o programa está sendo executado
 
-        System.out.println(labels.get("array"));
+        // System.out.println(labels.get("array"));
 
-        for (int i = 500; i < 540; i++) {
+        for (int i = 0; i < 100; i++) {
             System.out.println("memory[" + i + "] = " + memory[i]);
 
         }
@@ -35,6 +35,9 @@ public class AssemblyParser {
         int textAddress = 0;
         int dataAddress = 500;
 
+        //Serão 2 passadas no arquivo. Uma aloca os dados do .data e mapeia todos os labels.
+        //Na segunda cada instrucao será codificada usando o Encoder já com os labels mapeados
+
         try {
 
             List<String> lines = Files.readAllLines(Paths.get(filename));
@@ -42,7 +45,6 @@ public class AssemblyParser {
             String currentSection = "";
 
             for (String line : lines) {
-                // System.out.println(line);
 
                 line = line.trim();
     
@@ -65,7 +67,14 @@ public class AssemblyParser {
                     }
                         break;
                     case ".text":
-                        // Lógica para a seção .text
+                        if (line.contains(":")) {
+                            String labelName = line.split(":")[0].trim();
+                            labels.put(labelName, textAddress);
+                            System.out.println("Label encontrado: " + labelName + " -> " + textAddress);
+                        } else if (!line.isEmpty()) {
+                            // Guarda 4 bytes pra cada instrução dentro daquele label
+                            textAddress += 4;
+                        }
                         break;
                     default:
                         break;
@@ -73,8 +82,50 @@ public class AssemblyParser {
 
                 
             }
+            
+            textAddress = 0; 
+            currentSection = "";
 
-        } catch (IOException e) {
+            for (String line : lines) {
+            line = line.trim();
+            
+            if (line.isEmpty()) continue;
+            if (line.startsWith("#")) continue;
+
+            if (line.equals(".data")) {
+                currentSection = ".data";
+                continue;
+            }
+            if (line.equals(".text")) {
+                currentSection = ".text";
+                continue;
+            }
+
+            switch (currentSection) {
+                case ".text":
+                    if (line.contains(":")) {
+                        // Só pula o label, não incrementa endereço
+                        continue;
+                    } 
+                    else if (!line.isEmpty()) {
+                        try {
+                            String encodedInstruction = Encoder.encode_asm(line.trim());
+                            System.out.println("Instrução: " + line + " -> " + encodedInstruction);
+                            
+                            //Passa a string pra int. É usado long pq o parseInt com strings muito longas aprsenta erros
+                            int instructionInt = (int)(Long.parseLong(encodedInstruction, 2));
+                            writeData(instructionInt, textAddress, ".word");
+                            
+                            textAddress += 4;
+                        } catch (Exception e) {
+                            System.err.println("Erro ao processar instrução '" + line + "': " + e.getMessage());
+                        }
+                    }
+                    break;
+            }
+        }
+        
+    } catch (IOException e) {
             System.err.println("Erro ao ler arquivo: " + e.getMessage());
 
 
@@ -111,7 +162,6 @@ public class AssemblyParser {
         Integer dataSize = typeSizes.get(dataType);
         
         if(dataSize != null) {
-            // Versão otimizada: usa o dataSize diretamente
             for(int j = 0; j < dataSize; j++){
                 memory[currentAddress] = (byte)(num % 256);
                 num = num / 256;
