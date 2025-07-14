@@ -1,10 +1,9 @@
-package Classes.Estagios;
+package Estagios;
 
 import java.io.PipedWriter;
 import java.util.List;
-
-import Classes.Memoria;
-import Classes.Pipeline;
+import Pipeline.Pipeline;
+import UnidadeFuncionais.Memoria;
 
 // Classe que busca a próxima instrução da memória de instruções usando o PC (Contador de Programa)
 

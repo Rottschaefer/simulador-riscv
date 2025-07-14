@@ -1,4 +1,4 @@
-package Classes.Estagios;
+package Estagios;
 
 public class ALU {
     

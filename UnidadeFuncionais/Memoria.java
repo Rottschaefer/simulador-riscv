@@ -1,6 +1,7 @@
-package Classes;
+package UnidadeFuncionais;
 
-import javax.management.modelmbean.InvalidTargetObjectTypeException;
+import Auxiliares.AssemblyParser;
+import Auxiliares.Encoder;
 
 public class Memoria {
 

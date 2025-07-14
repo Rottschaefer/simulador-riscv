@@ -1,4 +1,4 @@
-package Classes;
+package Auxiliares;
 
 import java.util.HashMap;
 
@@ -127,7 +127,7 @@ public class Encoder {
         return encodedInstruction;
     }
 
-protected static String intToBinary(int numero, int bits) {
+public static String intToBinary(int numero, int bits) {
     
     String binary;
     

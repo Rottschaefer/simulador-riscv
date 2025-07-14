@@ -1,14 +1,17 @@
-import Classes.AssemblyParser;
-import Classes.Pipeline;
-import Classes.Estagios.InstructionFetch;
-import Classes.Memoria;
+import Auxiliares.AssemblyParser;
+import Estagios.InstructionFetch;
+import Pipeline.Pipeline;
+import UnidadeFuncionais.Memoria;
 
 public class Processador {
 
-    public static byte memoria[] = Classes.Memoria.memory;
+    public static byte memoria[] = UnidadeFuncionais.Memoria.memory;
 
     public static void main(String[] args){
-        run();
+        
+        AssemblyParser.parseFile("exemplo.asm");
+        Pipeline.setPc(0);
+
     }
     
     public static void run(){

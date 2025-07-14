@@ -1,7 +1,10 @@
-package Classes;
+package Auxiliares;
 
 import java.util.HashMap;
 import java.util.List;
+
+import UnidadeFuncionais.Memoria;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
