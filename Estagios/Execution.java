@@ -1,5 +1,5 @@
 package Estagios;
 
-public class ALU {
+public class Execution {
     
 }
