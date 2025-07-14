@@ -1,7 +1,10 @@
-package Classes;
+package Auxiliares;
 
 import java.util.HashMap;
 import java.util.List;
+
+import UnidadeFuncionais.Memoria;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
@@ -69,7 +72,6 @@ public class AssemblyParser {
                         if (line.contains(":")) {
                             String labelName = line.split(":")[0].trim();
                             labels.put(labelName, textAddress);
-                            System.out.println("Label encontrado: " + labelName + " -> " + textAddress);
                         } else if (!line.isEmpty()) {
                             // Guarda 4 bytes pra cada instrução dentro daquele label
                             Memoria.memory[textAddress] = -1;
@@ -114,7 +116,6 @@ public class AssemblyParser {
                         else if (!line.isEmpty()) {
                             try {
                                 String encodedInstruction = Encoder.encode_asm(line.trim());
-                                System.out.println("Instrução: " + line + " -> " + encodedInstruction);
                                     
                                 //Passa a string pra int. É usado long pq o parseInt com strings muito longas aprsenta erros
                                 int instructionInt = (int)(Long.parseLong(encodedInstruction, 2));

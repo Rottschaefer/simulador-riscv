@@ -1,4 +1,4 @@
-package Classes;
+package UnidadeFuncionais;
 
 public class BancoRegistradores {
     

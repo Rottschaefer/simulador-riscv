@@ -5,6 +5,7 @@
     array: .word 1, 2, 3, 4, 5
 
 .text
+    addi zero, zero, 0
     addi sp, sp, -4
     add x1, x2, x3
     addi x1, x2, 10

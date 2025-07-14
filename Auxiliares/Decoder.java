@@ -1,4 +1,4 @@
-package Classes;
+package Auxiliares;
 
 public class Decoder {
     
