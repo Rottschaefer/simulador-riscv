@@ -2,6 +2,8 @@ package Pipeline;
 
 public class IDEX {
 
+    private static String instruction = "00000000000000000000000000010011";
+
     // Sinais de Controle para a fase de Execução (EX)
     private static String aluOp = "";      // Define a operação da ALU (ex: "add", "sub")
     private static boolean aluSrc = false; // Seleciona a segunda entrada da ALU (false: Reg, true: Imm)
@@ -24,6 +26,14 @@ public class IDEX {
     private static int rd = 0;              // Endereço do registrador de destino rd
     private static int pc = 0;              // PC da instrução atual (para cálculo de branch)
 
+
+    public static void setIDEXInstruction(String nova_instrucao){
+        instruction = nova_instrucao;
+    }
+
+    public static String getIDEXInstruction(){
+        return instruction;
+    }
 
     public static String getAluOp() {
         return aluOp;

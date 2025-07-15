@@ -1,7 +1,10 @@
 package Pipeline;
 
+import Estagios.Execution;
 import Estagios.InstructionFetch;
+import Estagios.ReadMemory;
 import Estagios.ReadRegister;
+import Estagios.WriteBack;
 
 public class Pipeline {
 
@@ -13,8 +16,16 @@ public class Pipeline {
     // }
 
     public static void runCycle(){
-        InstructionFetch.buscaProximaInstrucao();
+
+        WriteBack.execute();
+
+        ReadMemory.execute();
+
+        Execution.execute();
+
         ReadRegister.decodeAndRead();
+
+        InstructionFetch.buscaProximaInstrucao();
     }
 
     public static void setPc(int newPc) {

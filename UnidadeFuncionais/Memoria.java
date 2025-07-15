@@ -36,5 +36,33 @@ public class Memoria {
 
         return value;
     }
+
+    public static int readWord(int address) {
+        if (address < 0 || address + 3 >= memory.length) {
+            throw new IndexOutOfBoundsException("Endereço fora do limite da memória.");
+        }
+        if (address % 4 != 0) {
+            throw new IllegalArgumentException("Endereço deve ser alinhado a 4 bytes.");
+        }
+
+        String word = (memory[address]) + (memory[address + 1]) + (memory[address + 2]) + (memory[address + 3]);
+        return Integer.parseInt(word, 2);
+    }
+
+    public static void writeWord(int value, int address) {
+        if (address < 0 || address + 3 >= memory.length) {
+            throw new IndexOutOfBoundsException("Endereço fora do limite da memória.");
+        }
+        if (address % 4 != 0) {
+            throw new IllegalArgumentException("Endereço deve ser alinhado a 4 bytes.");
+        }
+        
+        String binaryString = String.format("%32s", Integer.toBinaryString(value)).replace(' ', '0');
+        
+        memory[address] = binaryString.substring(0, 8);
+        memory[address + 1] = binaryString.substring(8, 16);
+        memory[address + 2] = binaryString.substring(16, 24);
+        memory[address + 3] = binaryString.substring(24, 32);
+    }
     
 }
