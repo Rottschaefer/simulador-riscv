@@ -1,30 +1,29 @@
+
 import Auxiliares.AssemblyParser;
-import Estagios.InstructionFetch;
+import Auxiliares.Decoder;
+import Pipeline.IDEX;
+import Pipeline.IFID;
 import Pipeline.Pipeline;
-import UnidadeFuncionais.Memoria;
 
 public class Processador {
 
-    public static byte memoria[] = UnidadeFuncionais.Memoria.memory;
 
     public static void main(String[] args){
         
         AssemblyParser.parseFile("exemplo.asm");
         Pipeline.setPc(0);
 
+        for(int i = 0; i < 10; i++){
+            Pipeline.runCycle();
+
+            String instruction = IFID.getIFIDInstruction();
+            System.out.println(Decoder.decodeInstruction(instruction) +", "+ IDEX.getRs1()  +", "+ IDEX.getRs2());
+
+
+        }
+
+
     }
     
-    public static void run(){
 
-        AssemblyParser.parseFile("exemplo.asm");
-        Pipeline.setPc(0);
-
-        //Pega próxima instrução na memória e aloca no registrador IF/ID
-        InstructionFetch.buscaProximaInstrucao(); 
-
-        System.out.println(Pipeline.IFID.getIFID());
-        System.out.println(Memoria.getInstruction(10));
-        // Memoria.printMemoria();
-        
-    } 
 }
