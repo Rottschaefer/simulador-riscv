@@ -116,9 +116,13 @@ public class AssemblyParser {
                         else if (!line.isEmpty()) {
                             try {
                                 String encodedInstruction = Encoder.encode_asm(line.trim());
+
                                     
                                 //Passa a string pra int. É usado long pq o parseInt com strings muito longas aprsenta erros
                                 int instructionInt = (int)(Long.parseLong(encodedInstruction, 2));
+                                System.out.println(instructionInt);
+
+
                                 writeData(instructionInt, textAddress, ".word");
                                     
                                 textAddress += 4;

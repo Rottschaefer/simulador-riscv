@@ -1,5 +1,8 @@
 package Pipeline;
 
+import Estagios.InstructionFetch;
+import Estagios.ReadRegister;
+
 public class Pipeline {
 
     private static int pc = 0;
@@ -9,22 +12,9 @@ public class Pipeline {
     //     System.out.println("fgjdndvd");
     // }
 
-    public static class IFID {
-        public static String instruction;
-        public static boolean valid = false;
-        
-        public void clear() {
-            instruction = "00000000000000000000000000010011"; //addi zero, zero, 0
-            valid = false;
-        }
-
-        public static void setIFID(String new_instruction){
-            instruction = new_instruction;
-        }
-
-        public static String getIFID(){
-            return instruction;
-        }
+    public static void runCycle(){
+        InstructionFetch.buscaProximaInstrucao();
+        ReadRegister.decodeAndRead();
     }
 
     public static void setPc(int newPc) {

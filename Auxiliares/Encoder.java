@@ -140,12 +140,13 @@ public static String intToBinary(int numero, int bits) {
         int resultado = numero & mask;
         binary = Integer.toBinaryString(resultado);
     }
+
     
     // Preenche com zeros à esquerda
     while (binary.length() < bits) {
         binary = "0" + binary;
     }
-        
+
     return binary;
 }
 
@@ -182,11 +183,14 @@ public static String intToBinary(int numero, int bits) {
         }
         
         String imediato = intToBinary(Integer.parseInt(args[3]), 12);
+
         String rs1 = intToBinary(registerMap.get(args[2]), 5);
         String rd = intToBinary(registerMap.get(args[1]), 5);
         
         // Formato I: imm[11:0] rs1[4:0] funct3[2:0] rd[4:0] opcode[6:0]
-        String instruction = imediato + rs1 + info.getFunct3() + rd + info.getOpcode(); 
+        String instruction = imediato + rs1 + info.getFunct3() + rd + info.getOpcode();
+
+        System.out.println(instruction);
 
         return instruction;
     

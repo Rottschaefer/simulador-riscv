@@ -2,6 +2,8 @@ package Estagios;
 
 import java.io.PipedWriter;
 import java.util.List;
+
+import Pipeline.IFID;
 import Pipeline.Pipeline;
 import UnidadeFuncionais.Memoria;
 
@@ -10,13 +12,13 @@ import UnidadeFuncionais.Memoria;
 public class InstructionFetch{
 
 
-    // Busca a próxima instrução da memória
+    // Busca a próxima instrução da memória e aloca no IFID
     public static void buscaProximaInstrucao() {
 
         int pc = Pipeline.getPC();
         if (pc < 996) {
             String instrucaoAtual = Memoria.getInstruction(pc);
-            Pipeline.IFID.setIFID(instrucaoAtual);
+            IFID.setIFIDInstruction(instrucaoAtual);
             Pipeline.setPc(pc+4);
 
     }
