@@ -74,7 +74,7 @@ public class AssemblyParser {
                             labels.put(labelName, textAddress);
                         } else if (!line.isEmpty()) {
                             // Guarda 4 bytes pra cada instrução dentro daquele label
-                            Memoria.memory[textAddress] = -1;
+                            Memoria.memory[textAddress] = "0";
                             textAddress += 4;
                         }
                         break;
@@ -119,11 +119,11 @@ public class AssemblyParser {
 
                                     
                                 //Passa a string pra int. É usado long pq o parseInt com strings muito longas aprsenta erros
-                                int instructionInt = (int)(Long.parseLong(encodedInstruction, 2));
-                                System.out.println(instructionInt);
+                                // int instructionInt = (int)(Long.parseLong(encodedInstruction, 2));
+                                // System.out.println(instructionInt);
 
 
-                                writeData(instructionInt, textAddress, ".word");
+                                writeData(encodedInstruction, textAddress, ".word");
                                     
                                 textAddress += 4;
                             } catch (Exception e) {
@@ -159,7 +159,9 @@ public class AssemblyParser {
             for(int i = 1; i < specs.length; i++){
                 int num = Integer.parseInt(specs[i]);
 
-                currentAddress = writeData(num, currentAddress, specs[0]);
+                String numBinary = Encoder.intToBinary(num, 32);
+
+                currentAddress = writeData(numBinary, currentAddress, specs[0]);
             }
 
             return currentAddress;
@@ -167,13 +169,14 @@ public class AssemblyParser {
 
     }
 
-    private static int writeData(int num, int currentAddress, String dataType){
+    private static int writeData(String encodedInstruction, int currentAddress, String dataType){
         Integer dataSize = typeSizes.get(dataType);
+
+        // System.out.println(encodedInstruction);
         
         if(dataSize != null) {
-            for(int j = 0; j < dataSize; j++){
-                Memoria.memory[currentAddress] = (byte)(num % 256);
-                num = num / 256;
+            for(int j = 0; j < dataSize*8; j+=8){
+                Memoria.memory[currentAddress] = encodedInstruction.substring(j, j+8);
                 currentAddress++;
             }
         } else {

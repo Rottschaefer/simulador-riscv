@@ -190,7 +190,6 @@ public static String intToBinary(int numero, int bits) {
         // Formato I: imm[11:0] rs1[4:0] funct3[2:0] rd[4:0] opcode[6:0]
         String instruction = imediato + rs1 + info.getFunct3() + rd + info.getOpcode();
 
-        System.out.println(instruction);
 
         return instruction;
     
@@ -331,8 +330,18 @@ public static String intToBinary(int numero, int bits) {
             throw new Exception("Instrução tipo J requer 2 ou 3 argumentos: " + String.join(" ", args));
         }
 
+        // Formato J: imm[20] | imm[10:1] | imm[11] | imm[19:12] | rd | opcode
+        String imm_20    = imediato.substring(0, 1);    // Bit 20
+        String imm_10_1  = imediato.substring(10, 20);  // Bits 10 a 1 (10 bits)
+        String imm_11    = imediato.substring(9, 10);   // Bit 11
+        String imm_19_12 = imediato.substring(1, 9);    // Bits 19 a 12 (8 bits)
+
+        String instruction = imm_20 + imm_10_1 + imm_11 + imm_19_12 + rd + info.getOpcode();
         
-        String instruction = imediato.charAt(19) + imediato.substring(0,9) + imediato.charAt(10) + imediato.substring(11,18) + rd + info.getOpcode();
+        if (instruction.length() != 32) {
+             throw new IllegalStateException("Erro interno no encode_j: instrução gerada não tem 32 bits. Tamanho: " + instruction.length());
+        }
+
         return instruction;
     }
 

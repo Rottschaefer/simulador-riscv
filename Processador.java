@@ -7,7 +7,6 @@ import Pipeline.Pipeline;
 
 public class Processador {
 
-    public static byte memoria[] = UnidadeFuncionais.Memoria.memory;
 
     public static void main(String[] args){
         

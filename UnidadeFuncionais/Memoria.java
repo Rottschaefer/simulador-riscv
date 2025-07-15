@@ -1,11 +1,10 @@
 package UnidadeFuncionais;
 
 import Auxiliares.AssemblyParser;
-import Auxiliares.Encoder;
 
 public class Memoria {
 
-    public static byte[] memory = new byte[1000];
+    public static String[] memory = new String[1000];
 
     public static void main(String[] args){
         AssemblyParser.parseFile("exemplo.asm");
@@ -15,15 +14,12 @@ public class Memoria {
 
     public static void printMemoria(){
 
-        for(int i=0; i<500; i+=4){
+        for(int i=0; i<20; i+=4){
 
             String address = "0x" + Integer.toHexString(i);
 
             //Usa mascara para transformar um byte com sinal para um int sem sinal
-            String content = Integer.toHexString((memory[i] & 0xFF) +
-                      ((memory[i+1] & 0xFF) << 8) +
-                      ((memory[i+2] & 0xFF) << 16) +
-                      ((memory[i+3] & 0xFF) << 24));
+            String content = (memory[i]) + (memory[i + 1]) + (memory[i + 2]) + (memory[i + 3]);
 
             if(!content.equals("0")) System.out.println(address + " - " + content);
         }
@@ -36,12 +32,9 @@ public class Memoria {
         else if(address%4 != 0){
             return "";
         }
-        int value = (memory[address] & 0xFF) +
-                    ((memory[address + 1] & 0xFF) << 8) +
-                    ((memory[address + 2] & 0xFF) << 16) +
-                    ((memory[address + 3] & 0xFF) << 24);
+        String value = (memory[address]) + (memory[address + 1]) + (memory[address + 2]) + (memory[address + 3]);
 
-        return Encoder.intToBinary(value, 32);
+        return value;
     }
     
 }

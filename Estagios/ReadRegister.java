@@ -4,7 +4,6 @@ import Auxiliares.Decoder;
 import Pipeline.IFID;
 import Pipeline.IDEX;
 import UnidadeFuncionais.BancoRegistradores;
-import UnidadeFuncionais.UnidadeDeControle;
 
 public class ReadRegister {
 
@@ -25,7 +24,6 @@ public class ReadRegister {
         // Decodifica o nome e o formato da instrução
         String instructionName = Decoder.decodeInstruction(instruction);
         String format = Decoder.getInstructionType(instruction);
-                    System.out.println("Aqui" +instruction);
 
 
         // Gera os sinais de controle com base no nome da instrução
@@ -49,7 +47,7 @@ public class ReadRegister {
                 case "I-Arith":
                 case "I-Load":
                 case "I-JALR":
-                    rs1 = Integer.parseInt(instruction.substring(15, 19), 2);
+                    rs1 = Integer.parseInt(instruction.substring(12, 17), 2);
                     rd = Integer.parseInt(instruction.substring(20, 25), 2);
                     readData1 = BancoRegistradores.getRegisterValue(rs1);
                     // Extrai e estende o sinal do imediato de 12 bits
