@@ -1,8 +1,4 @@
 package Estagios;
-
-import java.io.PipedWriter;
-import java.util.List;
-
 import Pipeline.IFID;
 import Pipeline.Pipeline;
 import UnidadeFuncionais.Memoria;
@@ -19,6 +15,7 @@ public class InstructionFetch{
         if (pc < 996) {
             String instrucaoAtual = Memoria.getInstruction(pc);
             IFID.setIFIDInstruction(instrucaoAtual);
+            IFID.setIFIDPC(pc);
             Pipeline.setPc(pc+4);
 
     }

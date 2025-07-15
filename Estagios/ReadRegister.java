@@ -52,6 +52,28 @@ public class ReadRegister {
                     readData1 = BancoRegistradores.getRegisterValue(rs1);
                     // Extrai e estende o sinal do imediato de 12 bits
                     immediate = signExtend(instruction.substring(0, 12));
+                    // Sinais de controle para instruções I
+                    if (format.equals("I-Arith")) {
+                        IDEX.setAluOp(instructionName);
+                        IDEX.setAluSrc(true);     // Usa imediato como segundo operando
+                        IDEX.setRegWrite(true);   // Escreve no registrador destino
+                        IDEX.setMemRead(false);   // Não lê da memória
+                        IDEX.setMemWrite(false);  // Não escreve na memória
+                        IDEX.setMemToReg(false);  // Resultado da ALU vai para o registrador
+                    } else if (format.equals("I-Load")) {
+                        IDEX.setAluOp("add");     // Calcula endereço (base + offset)
+                        IDEX.setAluSrc(true);     // Usa imediato como offset
+                        IDEX.setRegWrite(true);   // Escreve no registrador destino
+                        IDEX.setMemRead(true);    // Lê da memória
+                        IDEX.setMemWrite(false);  // Não escreve na memória
+                        IDEX.setMemToReg(true);   // Dado da memória vai para o registrador
+                    } else if (format.equals("I-JALR")) {
+                        IDEX.setAluOp("add");     // Calcula endereço de salto
+                        IDEX.setAluSrc(true);     // Usa imediato
+                        IDEX.setRegWrite(true);   // Salva PC+4 no registrador
+                        IDEX.setMemRead(false);   // Não lê da memória
+                        IDEX.setMemWrite(false);  // Não escreve na memória
+                    }
                     break;
 
                 case "S":
@@ -81,6 +103,7 @@ public class ReadRegister {
         }
 
         // Carregar o registrador de pipeline IDEX com todos os dados e sinais
+        IDEX.setIDEXInstruction(instruction);
         IDEX.setReadData1(readData1);
         IDEX.setReadData2(readData2);
         IDEX.setImmediate(immediate);
@@ -88,7 +111,7 @@ public class ReadRegister {
         IDEX.setRs2(rs2);
         IDEX.setRd(rd);
         // O PC também precisa ser passado adiante
-        // IDEX.setPc(Pipeline.getPC()); 
+        IDEX.setPc(IFID.getIFIDPC()); 
     }
 
     
