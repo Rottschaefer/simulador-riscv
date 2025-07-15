@@ -5,7 +5,7 @@ import Pipeline.IFID;
 import Pipeline.IDEX;
 import UnidadeFuncionais.BancoRegistradores;
 
-public class ReadRegister {
+public class InstructionDecode {
 
     /**
      * Realiza o estágio de Decodificação da Instrução e Leitura de Registradores (ID).
@@ -15,6 +15,7 @@ public class ReadRegister {
      * 4. Estende o sinal do imediato.
      * 5. Passa todos os dados e sinais para o registrador ID/EX.
      */
+    
     public static void decodeAndRead() {
         String instruction = IFID.getIFIDInstruction();
         if (instruction == null || instruction.length() != 32) {
@@ -42,6 +43,12 @@ public class ReadRegister {
                     rd = Integer.parseInt(instruction.substring(20, 25), 2);
                     readData1 = BancoRegistradores.getRegisterValue(rs1);
                     readData2 = BancoRegistradores.getRegisterValue(rs2);
+                    IDEX.setAluOp(instructionName);
+                    IDEX.setAluSrc(false); //Segundo operando vem do registrador
+                    IDEX.setRegWrite(true);   // Escreve no registrador destino
+                    IDEX.setMemRead(false);   // Não lê da memória
+                    IDEX.setMemWrite(false);  // Não escreve na memória
+                    IDEX.setMemToReg(false);  // Resultado da ALU vai para o registrador (false: ALU, true: Mem)
                     break;
 
                 case "I-Arith":
@@ -84,6 +91,13 @@ public class ReadRegister {
                     String imm_11_5 = instruction.substring(0, 7);
                     String imm_4_0 = instruction.substring(20, 25);
                     immediate = signExtend(imm_11_5 + imm_4_0);
+
+                    IDEX.setAluOp("add");     // Calcula endereço (base + offset)
+                    IDEX.setAluSrc(true);     // Usa imediato como offset
+                    IDEX.setRegWrite(false);  // Não escreve no registrador destino
+                    IDEX.setMemRead(false);   // Não lê da memória
+                    IDEX.setMemWrite(true);   // Escreve na memória
+                    IDEX.setMemToReg(false);  // Não importa, não escreve em registrador
                     break;
 
                 case "B":
@@ -97,6 +111,14 @@ public class ReadRegister {
                     String imm_11 = instruction.substring(24, 25);
                     // O bit 0 do imediato é sempre 0 e não é armazenado
                     immediate = signExtend(imm_12 + imm_11 + imm_10_5 + imm_4_1 + "0");
+
+                    IDEX.setAluOp(instructionName); // Operação de comparação (beq, bne, blt, etc.)
+                    IDEX.setAluSrc(false);    // Compara dois registradores
+                    IDEX.setRegWrite(false);  // Não escreve no registrador destino
+                    IDEX.setMemRead(false);   // Não lê da memória
+                    IDEX.setMemWrite(false);  // Não escreve na memória
+                    IDEX.setMemToReg(false);  // Não importa, não escreve em registrador
+                    IDEX.setBranch(true);     // Sinal de branch ativo
                     break;
                
             }

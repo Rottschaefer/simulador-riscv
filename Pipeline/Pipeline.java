@@ -3,7 +3,7 @@ package Pipeline;
 import Estagios.Execution;
 import Estagios.InstructionFetch;
 import Estagios.ReadMemory;
-import Estagios.ReadRegister;
+import Estagios.InstructionDecode;
 import Estagios.WriteBack;
 
 public class Pipeline {
@@ -23,7 +23,7 @@ public class Pipeline {
 
         Execution.execute();
 
-        ReadRegister.decodeAndRead();
+        InstructionDecode.decodeAndRead();
 
         InstructionFetch.buscaProximaInstrucao();
     }
