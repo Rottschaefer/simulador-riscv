@@ -79,7 +79,7 @@ public class Encoder {
         registerMap.put("t6", 31);  registerMap.put("x31", 31);
     }
 
-    public static String encode_asm(String instruction) throws Exception {
+    public static String encode_asm(String instruction, int currentAddress) throws Exception {
 
         String[] partes = instruction.replace(",", "").split(" ");
 
@@ -88,13 +88,13 @@ public class Encoder {
             throw new Exception("Instrução vazia");
         }
 
-        // Resolver labels - verifica todos os argumentos, não apenas o último
-        for (int i = 1; i < partes.length; i++) {
-            Integer labelAddress = AssemblyParser.labels.get(partes[i]);
-            if (labelAddress != null) {
-                partes[i] = String.valueOf(labelAddress);
-            }
-        }
+        // // Resolver labels - verifica todos os argumentos, não apenas o último
+        // for (int i = 1; i < partes.length; i++) {
+        //     Integer labelAddress = AssemblyParser.labels.get(partes[i]);
+        //     if (labelAddress != null) {
+        //         partes[i] = String.valueOf(labelAddress - currentAddress);
+        //     }
+        // }
 
         InstructionInfo info = instructionTypes.get(partes[0]);
         
@@ -115,10 +115,10 @@ public class Encoder {
                 encodedInstruction = encode_s(partes, info);
                 break;
             case "B":
-                encodedInstruction = encode_b(partes, info);
+                encodedInstruction = encode_b(partes, info, currentAddress);
                 break;
             case "J":
-                encodedInstruction = encode_j(partes, info);
+                encodedInstruction = encode_j(partes, info, currentAddress);
                 break;
             default:
                 throw new Exception("Tipo de instrução desconhecido: " + info.getTipo());
@@ -260,7 +260,7 @@ public static String intToBinary(int numero, int bits) {
         return instruction;
     }
     
-    private static String encode_b(String[] args, InstructionInfo info)throws Exception{
+    private static String encode_b(String[] args, InstructionInfo info, int currentAddress)throws Exception{
         
         if (args.length < 4) {
             System.out.println("Instrução tipo B requer 4 argumentos: " + String.join(" ", args));
@@ -272,6 +272,11 @@ public static String intToBinary(int numero, int bits) {
             throw new Exception("Registrador inválido: " + String.join(" ", args));
 
         }
+
+        //Cálculo de deslocamento caso exista o branch
+        String label = args[3];
+        int labelAddress = AssemblyParser.labels.get(label);
+        args[3] = String.valueOf((labelAddress - (currentAddress +4))/2);
         
         try {
             // Formato B: imm[12|10:5] rs2[4:0] rs1[4:0] funct3[2:0] imm[4:1|11] opcode[6:0]
@@ -286,6 +291,7 @@ public static String intToBinary(int numero, int bits) {
             String imm_11 = immBinary.substring(1, 2);      // bit 11
             
             String instruction = imm_12 + imm_10_5 + rs2 + rs1 + info.getFunct3() + imm_4_1 + imm_11 + info.getOpcode();
+
             return instruction;
         } catch (NumberFormatException e) {
             System.out.println("Erro ao converter imediato para número: " + args[3]);
@@ -293,7 +299,7 @@ public static String intToBinary(int numero, int bits) {
         }
     }
     
-    private static String encode_j(String[] args, InstructionInfo info)throws Exception{
+    private static String encode_j(String[] args, InstructionInfo info, int currentAddress)throws Exception{
         
         String rd;
         String imediato;
@@ -329,6 +335,11 @@ public static String intToBinary(int numero, int bits) {
         else {
             throw new Exception("Instrução tipo J requer 2 ou 3 argumentos: " + String.join(" ", args));
         }
+
+        //Cálculo de deslocamento caso exista o jump
+        String label = args[args.length - 1];
+        int labelAddress = AssemblyParser.labels.get(label);
+        args[args.length - 1] = String.valueOf((labelAddress - (currentAddress+4))/2);
 
         // Formato J: imm[20] | imm[10:1] | imm[11] | imm[19:12] | rd | opcode
         String imm_20    = imediato.substring(0, 1);    // Bit 20

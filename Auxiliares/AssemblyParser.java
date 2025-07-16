@@ -88,6 +88,8 @@ public class AssemblyParser {
             textAddress = 0; 
             currentSection = "";
 
+            //Segunda passada:
+
             for (String line : lines) {
                 line = line.trim();
                     
@@ -115,7 +117,7 @@ public class AssemblyParser {
                         } 
                         else if (!line.isEmpty()) {
                             try {
-                                String encodedInstruction = Encoder.encode_asm(line.trim());
+                                String encodedInstruction = Encoder.encode_asm(line.trim(), textAddress);
 
                                     
                                 //Passa a string pra int. É usado long pq o parseInt com strings muito longas aprsenta erros
