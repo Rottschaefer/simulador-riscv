@@ -1,25 +1,25 @@
-# simulador-riscv
+# Simulador RISC-V
 
 Este repositório contém um simulador educacional de um processador RISC-V implementado em Java. O projeto simula um pipeline clássico de 5 estágios, permitindo a execução, visualização e depuração de programas em Assembly RISC-V.
 
 ## Estrutura do Projeto
 
-- **/Auxiliares**: Classes utilitárias para parsing, encoding e decodificação de instruções.
+- **Auxiliares**: Classes utilitárias para parsing, encoding e decodificação de instruções.
   - `AssemblyParser.java`: Montador que lê arquivos `.asm`, resolve labels e carrega instruções/dados na memória.
   - `Encoder.java`: Codifica instruções Assembly em binário RISC-V.
   - `Decoder.java`: Decodifica instruções binárias para identificar operação, registradores e imediatos.
   - `InstructionInfo.java`: Estrutura auxiliar para informações de cada instrução.
 
-- **/Estagios**: Implementação dos estágios do pipeline.
+- **Estagios**: Implementação dos estágios do pipeline.
   - `InstructionFetch.java`: Busca a próxima instrução na memória.
   - `ReadRegister.java`: Decodifica a instrução e lê os registradores.
   - `Execution.java`: Executa operações aritméticas/lógicas e resolve branches.
   - `ReadMemory.java`: Realiza acesso à memória de dados (load/store).
   - `WriteBack.java`: Escreve resultados de volta no banco de registradores.
 
-- **/Pipeline**: Registradores de pipeline entre os estágios (IFID, IDEX, EXMEM, MEMWB) e controle do PC.
+- **Pipeline**: Registradores de pipeline entre os estágios (IFID, IDEX, EXMEM, MEMWB) e controle do PC.
 
-- **/Unidade Funcionais**: Componentes funcionais do processador.
+- **Unidade Funcionais**: Componentes funcionais do processador.
   - `BancoRegistradores.java`: Banco de 32 registradores inteiros.
   - `Memoria.java`: Memória de instruções e dados.
   - `ALU.java`: Classe que representa Unidade Lógica e Aritmética responsável pelas operações aritméticas e lógicas do processador.
@@ -50,8 +50,8 @@ Este repositório contém um simulador educacional de um processador RISC-V impl
 
 ## Autoria
 
-Eduardo Rottschaefer
-João Victor Machado Sperle
-Allan Vignoli dos Santos
-João Vitor Pereira Rodrigues
-José Enrique Viana de Oliveira
+- Eduardo Rottschaefer
+- João Victor Machado Sperle
+- Allan Vignoli dos Santos
+- João Vitor Pereira Rodrigues
+- José Enrique Viana de Oliveira
