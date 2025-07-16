@@ -20,7 +20,7 @@ public class EXMEM {
 
     // --- Informações de Branch ---
     private static boolean branchTaken;         // Flag que indica se o branch foi tomado
-    private static int branchTargetAddress; // Endereço de destino do branch
+    // private static int branchTargetAddress; // Endereço de destino do branch
 
     /**
      * Limpa (zera) todos os valores no registrador de pipeline.
@@ -37,7 +37,7 @@ public class EXMEM {
         aluResult = 0;
         writeData = 0;
         rd = 0;
-        branchTargetAddress = 0;
+        // branchTargetAddress = 0;
     }
 
     // --- Getters e Setters ---
@@ -122,11 +122,11 @@ public class EXMEM {
         EXMEM.branchTaken = branchTaken;
     }
 
-    public static int getBranchTargetAddress() {
-        return branchTargetAddress;
-    }
+    // public static int getBranchTargetAddress() {
+    //     return branchTargetAddress;
+    // }
 
-    public static void setBranchTargetAddress(int branchTargetAddress) {
-        EXMEM.branchTargetAddress = branchTargetAddress;
-    }
+    // public static void setBranchTargetAddress(int branchTargetAddress) {
+    //     EXMEM.branchTargetAddress = branchTargetAddress;
+    // }
 }

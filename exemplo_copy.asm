@@ -5,12 +5,20 @@
     array: .word 1, 2, 3, 4, 5
 
 .text
-    addi sp, sp, -4
-    addi x1, x0, 10
-    addi x2, x0, 20
+    addi x1, x0, 0
+    addi x2, x0, 0
+    add x0, x0, x0
+    beq x1, x1, fim
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0
+
+fim:
+    div x3, x1, x2
     
-    add x3, x1, x2
-    sub x4, x2, x1
    
 
     

@@ -106,12 +106,16 @@ public class InstructionDecode {
                     rs2 = Integer.parseInt(instruction.substring(7, 12), 2);
                     readData1 = BancoRegistradores.getRegisterValue(rs1);
                     readData2 = BancoRegistradores.getRegisterValue(rs2);
+
                     String imm_12 = instruction.substring(0, 1);
                     String imm_10_5 = instruction.substring(1, 7);
                     String imm_4_1 = instruction.substring(20, 24);
                     String imm_11 = instruction.substring(24, 25);
                     // O bit 0 do imediato é sempre 0 e não é armazenado
-                    immediate = signExtend(imm_12 + imm_11 + imm_10_5 + imm_4_1 + "0");
+                    immediate = signExtend(imm_12 + imm_10_5 + imm_4_1 + imm_11 + '0');
+
+                    System.out.println(immediate);
+
 
                     int zeroFlag = (readData1 - readData2);
                     boolean branchTaken = false;
@@ -132,6 +136,7 @@ public class InstructionDecode {
                     }
 
                     if(branchTaken){
+                        System.out.println("Imediato " + immediate);
                         Pipeline.setPc(IFID.getIFIDPC()+immediate);
                     }
 
