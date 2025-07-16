@@ -3,6 +3,7 @@ package Estagios;
 import Auxiliares.Decoder;
 import Pipeline.IFID;
 import Pipeline.IDEX;
+import Pipeline.Pipeline;
 import UnidadeFuncionais.BancoRegistradores;
 
 public class InstructionDecode {
@@ -111,6 +112,28 @@ public class InstructionDecode {
                     String imm_11 = instruction.substring(24, 25);
                     // O bit 0 do imediato é sempre 0 e não é armazenado
                     immediate = signExtend(imm_12 + imm_11 + imm_10_5 + imm_4_1 + "0");
+
+                    int zeroFlag = (readData1 - readData2);
+                    boolean branchTaken = false;
+
+                    switch (instructionName) {
+                        case "beq":
+                            if (zeroFlag == 0) branchTaken = true;
+                            break;
+                        case "bne":
+                            if (zeroFlag != 0) branchTaken = true;
+                            break;
+                        case "blt":
+                            if (zeroFlag < 0) branchTaken = true; // (rs1 - rs2) < 0  => rs1 < rs2
+                            break;
+                        case "bge":
+                            if (zeroFlag >= 0) branchTaken = true; // (rs1 - rs2) >= 0 => rs1 >= rs2
+                            break;
+                    }
+
+                    if(branchTaken){
+                        Pipeline.setPc(IFID.getIFIDPC()+immediate);
+                    }
 
                     IDEX.setAluOp(instructionName); // Operação de comparação (beq, bne, blt, etc.)
                     IDEX.setAluSrc(false);    // Compara dois registradores
