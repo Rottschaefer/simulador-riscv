@@ -9,7 +9,9 @@ public class BancoRegistradores {
         registers[0] = 0;
     }
 
- 
+    public static int[] getRegisters(){
+        return (registers);
+    }
     public static int getRegisterValue(int registerNumber) {
         if (registerNumber < 0 || registerNumber >= 32) {
             System.err.println("Erro: Tentativa de ler registrador inválido: " + registerNumber);

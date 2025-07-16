@@ -64,5 +64,9 @@ public class Memoria {
         memory[address + 2] = binaryString.substring(16, 24);
         memory[address + 3] = binaryString.substring(24, 32);
     }
+
+    public static String[] getMemoria(){
+        return(memory);
+    }
     
 }
