@@ -12,7 +12,7 @@ public class Processador {
 
     public static void main(String[] args){
         
-        AssemblyParser.parseFile("exemplo.asm");
+        AssemblyParser.parseFile("exemplo_copy.asm");
         Pipeline.setPc(0);
 
         for(int i = 0; i < 7; i++){
@@ -27,8 +27,10 @@ public class Processador {
 
     }
     public static void printPipelineStages() {
+
+        
         System.out.println("=== Pipeline Stages ===");
-        System.out.println("IF/ID: " + Decoder.decodeInstruction(IFID.getIFIDInstruction()));
+        System.out.println("IF/ID: " + Decoder.decodeInstruction(IFID.getIFIDInstruction()) + " " + IDEX.getRs1() + " " + IDEX.getImmediate());
         System.out.println("ID/EX: " + Decoder.decodeInstruction(IDEX.getIDEXInstruction()));
         System.out.println("EX/MEM: " + Decoder.decodeInstruction(EXMEM.getEXMEMInstruction()));
         System.out.println("MEM/WB: " + Decoder.decodeInstruction(MEMWB.getMEMWBInstruction()));
