@@ -20,7 +20,9 @@ public class Execution {
 
         if (IDEX.isAluSrc()) {
             // A segunda entrada da ALU é o imediato
+
             operand2 = IDEX.getImmediate();
+
         } else {
             // A segunda entrada da ALU é o valor do registrador rs2
             operand2 = IDEX.getReadData2();
@@ -29,6 +31,8 @@ public class Execution {
         // --- 2. Execução da ALU ---
         String aluOp = IDEX.getAluOp();
         int aluResult = ALU.execute(aluOp, operand1, operand2);
+
+        System.out.println("Volta da ALU:" + aluResult);
 
         // --- 3. Lógica de Branch ---
         boolean zeroFlag = (aluResult == 0); // O zero flag é ativado se o resultado da subtração for 0

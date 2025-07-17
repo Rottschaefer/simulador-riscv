@@ -15,7 +15,7 @@ public class Processador {
         AssemblyParser.parseFile("exemplo.asm");
         Pipeline.setPc(0);
 
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < 20; i++){
             Pipeline.runCycle();
 
 

@@ -114,7 +114,7 @@ public class InstructionDecode {
                     // O bit 0 do imediato é sempre 0 e não é armazenado
                     immediate = signExtend(imm_12 + imm_10_5 + imm_4_1 + imm_11 + '0');
 
-                    System.out.println(immediate);
+                    // System.out.println(immediate);
 
 
                     int zeroFlag = (readData1 - readData2);
@@ -136,7 +136,7 @@ public class InstructionDecode {
                     }
 
                     if(branchTaken){
-                        System.out.println("Imediato " + immediate);
+                        System.out.println(immediate);
                         Pipeline.setPc(IFID.getIFIDPC()+immediate);
                     }
 

@@ -6,7 +6,6 @@
 
 .text
     # addi zero, zero, 0
-    addi sp, sp, -4
     add x1, x2, x3
     addi x1, x2, 10
     
@@ -24,7 +23,7 @@
     
     # Acesso à memória
     lw x11, 0(sp)
-    sw x3, 4(sp)
+    sw x3, 0(sp)
     
     # Instruções de branch
     beq x1, x2, fim
@@ -33,8 +32,6 @@
     bge x1, x2, fim
     
 loop:
-    addi x1, x1, 1
-    addi x2, x2, -1
     bne x1, x2, loop
     
 fim:

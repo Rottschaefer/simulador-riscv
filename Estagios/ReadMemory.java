@@ -11,6 +11,8 @@ public class ReadMemory {
         boolean memRead = EXMEM.isMemRead();
         boolean memWrite = EXMEM.isMemWrite();
         int aluResult = EXMEM.getAluResult();
+
+        System.out.println("Alu result" + aluResult);
         int writeData = EXMEM.getWriteData();
 
         int readData = 0; // Valor padrão
