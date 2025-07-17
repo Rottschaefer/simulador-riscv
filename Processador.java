@@ -66,10 +66,10 @@ public class Processador {
 
             fw.write("=== Registradores(ciclo " + i + "): ===" + "\n");
             for(int j=0; j<32; j++){
-                if(regs[j]!=0){
+                //if(regs[j]!=0){
                     fw.write("Registradores[" + j +"] = " + regs[j] + "\n");
                     fw.write("=====================" + "\n");
-                }
+                //}
             }
             fw.write("\n");
 
@@ -78,8 +78,10 @@ public class Processador {
                 if (memoria[k]!=null){
                     String linha = memoria[k];
                     int conv = Integer.parseInt(linha, 2);
+                    if(conv!=0){
                     String convhex = Integer.toHexString(conv).toUpperCase();
                     fw.write(convhex + "; " );
+                    }
                 }
             }
             fw.write("\n");
