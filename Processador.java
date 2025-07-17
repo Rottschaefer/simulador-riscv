@@ -12,10 +12,10 @@ public class Processador {
 
     public static void main(String[] args){
         
-        AssemblyParser.parseFile("exemplo.asm");
+        AssemblyParser.parseFile("exemplo_copy.asm");
         Pipeline.setPc(0);
 
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < 10; i++){
             Pipeline.runCycle();
 
 
