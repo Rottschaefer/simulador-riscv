@@ -32,7 +32,6 @@ public class Execution {
         String aluOp = IDEX.getAluOp();
         int aluResult = ALU.execute(aluOp, operand1, operand2);
 
-        System.out.println("Volta da ALU:" + aluResult);
 
         // --- 3. Lógica de Branch ---
         boolean zeroFlag = (aluResult == 0); // O zero flag é ativado se o resultado da subtração for 0

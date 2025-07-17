@@ -30,7 +30,6 @@ public class Pipeline {
 
     public static void setPc(int newPc) {
 
-        System.out.println("PC " + newPc);
 
         if (newPc % 4 == 0) {
             pc = newPc;
