@@ -42,7 +42,7 @@ Este repositório contém um simulador educacional de um processador RISC-V impl
    ```
    java Processador
    ```
-3. Edite o arquivo `exemplo.asm` para testar diferentes programas.
+3. Insira no terminal o arquivo .asm que deseja rodar e pronto :)
 
 ## Observações
 - O simulador é voltado para fins didáticos e não cobre todas as instruções do RISC-V.
