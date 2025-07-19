@@ -11,6 +11,7 @@ import UnidadeFuncionais.Memoria;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.*;
 
 public class Processador {
 
@@ -26,22 +27,12 @@ public class Processador {
             int regs[]=registersl.getRegisters();  
             
             //Linhas de código para a interface(Swing)
-            //JFrame frame = new JFrame();
-            //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            //frame.setSize(500, 500);
-            //JPanel painel = new JPanel();
-            //painel.setSize(250, 250);
-            //painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
-            //JLabel cabecalho = new JLabel();
-            //JLabel IFIDl = new JLabel();
-            //JLabel IFEXl = new JLabel();
-            //JLabel EXMEMl = new JLabel();
-            //JLabel MEMWBl = new JLabel();
-            //JLabel Joao = new JLabel();
-            //Joao.setText("Hello World!");
-            //painel.add(cabecalho); painel.add(IFIDl); painel.add(IFEXl); painel.add(EXMEMl); painel.add(MEMWBl); painel.add(Joao);
-            //frame.add(painel);
-            //frame.setVisible(true);
+            JFrame frame = new JFrame();
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(1000, 1000);
+            JPanel painel = new JPanel();
+            painel.setSize(250, 150);
+            painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
 
             AssemblyParser.parseFile("exemplo.asm");
             Pipeline.setPc(0);
@@ -56,6 +47,21 @@ public class Processador {
             fw.write(("EX/MEM: " + Decoder.decodeInstruction(EXMEM.getEXMEMInstruction())) + "\n");
             fw.write(("MEM/WB: " + Decoder.decodeInstruction(MEMWB.getMEMWBInstruction())) + "\n");
             fw.write("=====================" + "\n");
+
+            JLabel cabecalho = new JLabel();
+            cabecalho.setText("\n=== Pipeline Stages " + "ciclo " + i + " ===" + "\n");
+            JLabel IFIDl = new JLabel();
+            IFIDl.setText(("IF/ID: " + Decoder.decodeInstruction(IFID.getIFIDInstruction())) + "\n");
+            JLabel IDEXl = new JLabel();
+            IDEXl.setText(("ID/EX: " + Decoder.decodeInstruction(IDEX.getIDEXInstruction())) + "\n");
+            JLabel EXMEMl = new JLabel();
+            EXMEMl.setText(("EX/MEM: " + Decoder.decodeInstruction(EXMEM.getEXMEMInstruction())) + "\n");
+            JLabel MEMWBl = new JLabel();
+            MEMWBl.setText(("MEM/WB: " + Decoder.decodeInstruction(MEMWB.getMEMWBInstruction())) + "\n");
+            JLabel rodape = new JLabel();
+            rodape.setText("=====================" + "\n");
+            painel.add(cabecalho); painel.add(IFIDl); painel.add(IDEXl); painel.add(EXMEMl); painel.add(MEMWBl); painel.add(rodape);
+
             //System.out.println("=== Pipeline Stages " + "ciclo " + i + " ===" + "\n");
             //System.out.println(("IF/ID: " + Decoder.decodeInstruction(IFID.getIFIDInstruction())) + "\n");
             //System.out.println(("ID/EX: " + Decoder.decodeInstruction(IDEX.getIDEXInstruction())) + "\n");
@@ -97,6 +103,9 @@ public class Processador {
         }
         
         fw.close();
+        frame.add(painel);
+        frame.setVisible(true);
+
     //public static void printPipelineStages() {
         //cabecalho.setText("=== Pipeline Stages ===");
         //System.out.println("IF/ID: " + Decoder.decodeInstruction(IFID.getIFIDInstruction()));
