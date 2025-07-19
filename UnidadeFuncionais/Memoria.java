@@ -45,7 +45,12 @@ public class Memoria {
             throw new IllegalArgumentException("Endereço deve ser alinhado a 4 bytes.");
         }
 
+        
+
         String word = (memory[address]) + (memory[address + 1]) + (memory[address + 2]) + (memory[address + 3]);
+
+        System.out.println(word);
+
         return Integer.parseInt(word, 2);
     }
 
