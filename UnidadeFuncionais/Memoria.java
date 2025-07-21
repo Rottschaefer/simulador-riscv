@@ -70,4 +70,9 @@ public class Memoria {
         memory[address + 3] = binaryString.substring(24, 32);
     }
     
+    public static String[] getMemoria(){
+        return(memory);
+    }
+
 }
+

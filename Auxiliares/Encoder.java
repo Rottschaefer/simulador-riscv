@@ -278,7 +278,6 @@ public static String intToBinary(int numero, int bits) {
         int labelAddress = AssemblyParser.labels.get(label);
         args[3] = String.valueOf((labelAddress - (currentAddress +4))/2);
 
-        System.out.println("args " + args[3]);
         
         try {
             // Formato B: imm[12|10:5] rs2[4:0] rs1[4:0] funct3[2:0] imm[4:1|11] opcode[6:0]

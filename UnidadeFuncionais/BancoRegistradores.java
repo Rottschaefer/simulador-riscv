@@ -40,4 +40,7 @@ public class BancoRegistradores {
         }
         System.out.println("----------------------------------------");
     }
+    public static int[] getRegisters(){
+        return (registers);
+}
 }
