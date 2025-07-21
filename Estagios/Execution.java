@@ -30,6 +30,13 @@ public class Execution {
 
         // --- 2. Execução da ALU ---
         String aluOp = IDEX.getAluOp();
+
+        // Verificar se aluOp é válido antes de executar
+        if (aluOp == null || aluOp.isEmpty()) {
+            // Pipeline ainda não tem instrução válida, usar NOP
+            aluOp = "add"; // ou qualquer operação padrão
+        }
+
         int aluResult = ALU.execute(aluOp, operand1, operand2);
 
 
@@ -38,22 +45,22 @@ public class Execution {
         boolean branchTaken = false;
         
         // A decisão do branch é tomada aqui
-        // if (IDEX.isBranch()) {
-        //     switch (aluOp) {
-        //         case "beq":
-        //             if (zeroFlag) branchTaken = true;
-        //             break;
-        //         case "bne":
-        //             if (!zeroFlag) branchTaken = true;
-        //             break;
-        //         case "blt":
-        //             if (aluResult < 0) branchTaken = true; // (rs1 - rs2) < 0  => rs1 < rs2
-        //             break;
-        //         case "bge":
-        //             if (aluResult >= 0) branchTaken = true; // (rs1 - rs2) >= 0 => rs1 >= rs2
-        //             break;
-        //     }
-        // }
+         if (IDEX.isBranch()) {
+             switch (aluOp) {
+                 case "beq":
+                     if (zeroFlag) branchTaken = true;
+                     break;
+                 case "bne":
+                     if (!zeroFlag) branchTaken = true;
+                     break;
+                 case "blt":
+                     if (aluResult < 0) branchTaken = true; // (rs1 - rs2) < 0  => rs1 < rs2
+                     break;
+                 case "bge":
+                     if (aluResult >= 0) branchTaken = true; // (rs1 - rs2) >= 0 => rs1 >= rs2
+                     break;
+             }
+        }
         
         // // O endereço de destino do branch (PC + imediato) é calculado aqui
         // int branchTargetAddress = IDEX.getPc() + IDEX.getImmediate();
