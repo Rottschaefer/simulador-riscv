@@ -31,8 +31,12 @@ public class Processador {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(1500, 1000);
             JPanel painel = new JPanel();
-            painel.setSize(250, 150);
             painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
+
+            // CRIAR O SCROLL PANE
+            JScrollPane scrollPane = new JScrollPane(painel);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
             // Substituir entrada do terminal por caixa de diálogo
             String nome_arquivo = JOptionPane.showInputDialog(
@@ -53,7 +57,7 @@ public class Processador {
             AssemblyParser.parseFile(nome_arquivo);
             Pipeline.setPc(0);
 
-            for(int i = 0; i < 7; i++){
+            for(int i = 0; i < 15; i++){ // Aumentar de 7 para 10
                 Pipeline.runCycle();
                 
                 // CAPTURAR OS REGISTRADORES ATUALIZADOS A CADA CICLO
@@ -164,13 +168,14 @@ public class Processador {
             painel.add(bancoReg3);
             painel.add(bancoReg4);
             fw.close();
-            frame.add(painel);
+            frame.add(scrollPane); // <- MUDAR AQUI
             frame.setVisible(true);
 
         
-        fw.close();
-        frame.add(painel);
-        frame.setVisible(true);
+        // REMOVER as linhas duplicadas no final:
+        // fw.close();
+        // frame.add(painel);
+        // frame.setVisible(true);
 
     //public static void printPipelineStages() {
         //cabecalho.setText("=== Pipeline Stages ===");
