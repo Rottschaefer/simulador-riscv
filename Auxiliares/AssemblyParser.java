@@ -21,18 +21,6 @@ public class AssemblyParser {
         typeSizes.put(".dword", 8);
     }
 
-    public static void main(String[] args) {
-        
-        parseFile("exemplo.asm"); //Caminho aqui tem que ser relativo à pasta aonde o programa está sendo executado
-
-        // System.out.println(labels.get("array"));
-
-        for (int i = 0; i < 100; i++) {
-            System.out.println("memory[" + i + "] = " + Memoria.memory[i]);
-
-        }
-    }
-    
     public static void parseFile(String filename) {
         int textAddress = 0;
         int dataAddress = 500;
