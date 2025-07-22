@@ -1,6 +1,6 @@
 
 === Pipeline Stages ciclo 0 ===
-IF/ID: addi
+IF/ID: add
 ID/EX: addi
 EX/MEM: addi
 MEM/WB: addi
@@ -71,12 +71,12 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 0): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 1 ===
 IF/ID: addi
-ID/EX: addi
+ID/EX: add
 EX/MEM: addi
 MEM/WB: addi
 =====================
@@ -146,13 +146,13 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 1): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 2 ===
-IF/ID: addi
+IF/ID: add
 ID/EX: addi
-EX/MEM: addi
+EX/MEM: add
 MEM/WB: addi
 =====================
 === Registradores(ciclo 2): ===
@@ -221,14 +221,14 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 2): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 3 ===
-IF/ID: addi
-ID/EX: addi
+IF/ID: sub
+ID/EX: add
 EX/MEM: addi
-MEM/WB: addi
+MEM/WB: add
 =====================
 === Registradores(ciclo 3): ===
 Registradores[0] = 0
@@ -296,19 +296,19 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 3): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 4 ===
-IF/ID: addi
-ID/EX: addi
-EX/MEM: addi
+IF/ID: mul
+ID/EX: sub
+EX/MEM: add
 MEM/WB: addi
 =====================
 === Registradores(ciclo 4): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 0
 =====================
 Registradores[2] = 0
 =====================
@@ -371,23 +371,23 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 4): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 5 ===
-IF/ID: addi
-ID/EX: addi
-EX/MEM: addi
-MEM/WB: addi
+IF/ID: and
+ID/EX: mul
+EX/MEM: sub
+MEM/WB: add
 =====================
 === Registradores(ciclo 5): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 10
 =====================
 Registradores[2] = 0
 =====================
-Registradores[3] = 10
+Registradores[3] = 0
 =====================
 Registradores[4] = 0
 =====================
@@ -446,25 +446,25 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 5): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 6 ===
-IF/ID: addi
-ID/EX: addi
-EX/MEM: addi
-MEM/WB: addi
+IF/ID: or
+ID/EX: and
+EX/MEM: mul
+MEM/WB: sub
 =====================
 === Registradores(ciclo 6): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 10
 =====================
 Registradores[2] = 0
 =====================
-Registradores[3] = 10
+Registradores[3] = 0
 =====================
-Registradores[4] = 20
+Registradores[4] = 0
 =====================
 Registradores[5] = 0
 =====================
@@ -521,27 +521,27 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 6): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 7 ===
-IF/ID: addi
-ID/EX: addi
-EX/MEM: addi
-MEM/WB: addi
+IF/ID: xor
+ID/EX: or
+EX/MEM: and
+MEM/WB: mul
 =====================
 === Registradores(ciclo 7): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 10
 =====================
 Registradores[2] = 0
 =====================
-Registradores[3] = 10
+Registradores[3] = 0
 =====================
-Registradores[4] = 20
+Registradores[4] = 0
 =====================
-Registradores[5] = 30
+Registradores[5] = 0
 =====================
 Registradores[6] = 0
 =====================
@@ -596,27 +596,27 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 7): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 8 ===
-IF/ID: addi
-ID/EX: addi
-EX/MEM: addi
-MEM/WB: addi
+IF/ID: sll
+ID/EX: xor
+EX/MEM: or
+MEM/WB: and
 =====================
 === Registradores(ciclo 8): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 10
 =====================
 Registradores[2] = 0
 =====================
-Registradores[3] = 10
+Registradores[3] = 0
 =====================
-Registradores[4] = 20
+Registradores[4] = 0
 =====================
-Registradores[5] = 30
+Registradores[5] = 0
 =====================
 Registradores[6] = 0
 =====================
@@ -671,27 +671,27 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 8): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 9 ===
-IF/ID: addi
-ID/EX: addi
-EX/MEM: addi
-MEM/WB: addi
+IF/ID: srl
+ID/EX: sll
+EX/MEM: xor
+MEM/WB: or
 =====================
 === Registradores(ciclo 9): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 10
 =====================
-Registradores[2] = 2
+Registradores[2] = 0
 =====================
-Registradores[3] = 10
+Registradores[3] = 0
 =====================
-Registradores[4] = 20
+Registradores[4] = 0
 =====================
-Registradores[5] = 30
+Registradores[5] = 0
 =====================
 Registradores[6] = 0
 =====================
@@ -746,31 +746,31 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 9): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 10 ===
-IF/ID: addi
-ID/EX: addi
-EX/MEM: addi
-MEM/WB: addi
+IF/ID: lw
+ID/EX: srl
+EX/MEM: sll
+MEM/WB: xor
 =====================
 === Registradores(ciclo 10): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 10
 =====================
-Registradores[2] = 2
+Registradores[2] = 0
 =====================
-Registradores[3] = 10
+Registradores[3] = 0
 =====================
-Registradores[4] = 20
+Registradores[4] = 0
 =====================
-Registradores[5] = 30
+Registradores[5] = 0
 =====================
 Registradores[6] = 0
 =====================
-Registradores[7] = 0
+Registradores[7] = 10
 =====================
 Registradores[8] = 0
 =====================
@@ -821,33 +821,33 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 10): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 11 ===
-IF/ID: addi
-ID/EX: addi
-EX/MEM: addi
-MEM/WB: addi
+IF/ID: sw
+ID/EX: lw
+EX/MEM: srl
+MEM/WB: sll
 =====================
 === Registradores(ciclo 11): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 10
 =====================
-Registradores[2] = 2
+Registradores[2] = 0
 =====================
-Registradores[3] = 10
+Registradores[3] = 0
 =====================
-Registradores[4] = 20
+Registradores[4] = 0
 =====================
-Registradores[5] = 30
+Registradores[5] = 0
 =====================
 Registradores[6] = 0
 =====================
-Registradores[7] = 0
+Registradores[7] = 10
 =====================
-Registradores[8] = 0
+Registradores[8] = 10
 =====================
 Registradores[9] = 0
 =====================
@@ -896,35 +896,35 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 11): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 12 ===
-IF/ID: addi
-ID/EX: addi
-EX/MEM: addi
-MEM/WB: addi
+IF/ID: beq
+ID/EX: sw
+EX/MEM: lw
+MEM/WB: srl
 =====================
 === Registradores(ciclo 12): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 10
 =====================
-Registradores[2] = 2
+Registradores[2] = 0
 =====================
-Registradores[3] = 10
+Registradores[3] = 0
 =====================
-Registradores[4] = 20
+Registradores[4] = 0
 =====================
-Registradores[5] = 30
+Registradores[5] = 0
 =====================
 Registradores[6] = 0
 =====================
-Registradores[7] = 0
+Registradores[7] = 10
 =====================
-Registradores[8] = 0
+Registradores[8] = 10
 =====================
-Registradores[9] = 0
+Registradores[9] = 10
 =====================
 Registradores[10] = 0
 =====================
@@ -971,37 +971,37 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 12): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 13 ===
-IF/ID: Invalid
-ID/EX: addi
-EX/MEM: addi
-MEM/WB: addi
+IF/ID: bne
+ID/EX: beq
+EX/MEM: sw
+MEM/WB: lw
 =====================
 === Registradores(ciclo 13): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 10
 =====================
-Registradores[2] = 2
+Registradores[2] = 0
 =====================
-Registradores[3] = 4
+Registradores[3] = 0
 =====================
-Registradores[4] = 20
+Registradores[4] = 0
 =====================
-Registradores[5] = 30
+Registradores[5] = 0
 =====================
 Registradores[6] = 0
 =====================
-Registradores[7] = 0
+Registradores[7] = 10
 =====================
-Registradores[8] = 0
+Registradores[8] = 10
 =====================
-Registradores[9] = 0
+Registradores[9] = 10
 =====================
-Registradores[10] = 0
+Registradores[10] = 10
 =====================
 Registradores[11] = 0
 =====================
@@ -1046,39 +1046,39 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 13): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+31; B3; A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
 
 === Pipeline Stages ciclo 14 ===
 IF/ID: jalr
-ID/EX: addi
-EX/MEM: addi
-MEM/WB: addi
+ID/EX: bne
+EX/MEM: beq
+MEM/WB: sw
 =====================
 === Registradores(ciclo 14): ===
 Registradores[0] = 0
 =====================
-Registradores[1] = 1
+Registradores[1] = 10
 =====================
-Registradores[2] = 2
+Registradores[2] = 0
 =====================
-Registradores[3] = 4
+Registradores[3] = 0
 =====================
-Registradores[4] = 20
+Registradores[4] = 0
 =====================
-Registradores[5] = 30
+Registradores[5] = 0
 =====================
 Registradores[6] = 0
 =====================
-Registradores[7] = 0
+Registradores[7] = 10
 =====================
-Registradores[8] = 0
+Registradores[8] = 10
 =====================
-Registradores[9] = 0
+Registradores[9] = 10
 =====================
-Registradores[10] = 0
+Registradores[10] = 10
 =====================
-Registradores[11] = 0
+Registradores[11] = 3211443
 =====================
 Registradores[12] = 0
 =====================
@@ -1121,5 +1121,5 @@ Registradores[30] = 0
 Registradores[31] = 0
 =====================
 === Memória(ciclo 14): ===
-10; 93; A0; 1; 93; 1; 40; 2; 13; 1; E0; 2; 93; 13; 10; 81; 13; 13; 13; 13; 21; 1; 93; 13; 13; 13; 80; 67; 2A; 1; 2; 3; 4; 5; 
+A1; 93; 20; 81; B3; 40; 11; 2; 33; 2; 20; 82; B3; 20; F3; 33; 20; E3; B3; 20; C4; 33; 20; 94; B3; 20; D5; 33; 1; 25; 83; 31; 20; 23; 20; 85; 63; 20; 93; 63; 20; C2; 63; 20; D2; 63; FE; 20; 9F; E3; 1; 80; EF; 80; 67; 2A; 1; 2; 3; 4; 5; 
 =====================
