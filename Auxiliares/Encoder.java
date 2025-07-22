@@ -260,104 +260,131 @@ public static String intToBinary(int numero, int bits) {
         return instruction;
     }
     
-    private static String encode_b(String[] args, InstructionInfo info, int currentAddress)throws Exception{
-        
-        if (args.length < 4) {
-            System.out.println("Instrução tipo B requer 4 argumentos: " + String.join(" ", args));
-            throw new Exception("Instrução tipo B requer 4 argumentos: " + String.join(" ", args));
-        }
-        
-        if (!registerMap.containsKey(args[1]) || !registerMap.containsKey(args[2])) {
-            System.out.println("Registrador inválido em instrução B: " + String.join(" ", args));
-            throw new Exception("Registrador inválido: " + String.join(" ", args));
-
-        }
-
-        //Cálculo de deslocamento caso exista o branch
-        String label = args[3];
-        int labelAddress = AssemblyParser.labels.get(label);
-        args[3] = String.valueOf((labelAddress - (currentAddress +4))/2);
-
-        
-        try {
-            // Formato B: imm[12|10:5] rs2[4:0] rs1[4:0] funct3[2:0] imm[4:1|11] opcode[6:0]
-            int imediato = Integer.parseInt(args[3]);
-            String immBinary = intToBinary(imediato, 13); // 13 bits para incluir o bit 12
-            String rs2 = intToBinary(registerMap.get(args[2]), 5);
-            String rs1 = intToBinary(registerMap.get(args[1]), 5);
-            
-            String imm_12 = immBinary.substring(0, 1);      // bit 12
-            String imm_10_5 = immBinary.substring(2, 8);    // bits 10:5
-            String imm_4_1 = immBinary.substring(8, 12);    // bits 4:1
-            String imm_11 = immBinary.substring(1, 2);      // bit 11
-            
-            String instruction = imm_12 + imm_10_5 + rs2 + rs1 + info.getFunct3() + imm_4_1 + imm_11 + info.getOpcode();
-
-            return instruction;
-        } catch (NumberFormatException e) {
-            System.out.println("Erro ao converter imediato para número: " + args[3]);
-            return "-1";
-        }
+    private static String encode_b(String[] args, InstructionInfo info, int currentAddress) throws Exception {
+    
+    if (args.length < 4) {
+        System.out.println("Instrução tipo B requer 4 argumentos: " + String.join(" ", args));
+        throw new Exception("Instrução tipo B requer 4 argumentos: " + String.join(" ", args));
     }
     
-    private static String encode_j(String[] args, InstructionInfo info, int currentAddress)throws Exception{
-        
-        String rd;
-        String imediato;
-
-        
-        
-        if (args.length == 2) {
-            // Formato: j label (pseudo-instrução, equivale a jal x0, label)
-            rd = intToBinary(0, 5); // x0 (zero register)
-
-            try {
-                imediato = intToBinary(Integer.parseInt(args[1]), 20);
-            } catch (NumberFormatException e) {
-                throw new Exception("Erro ao converter imediato para número: " + args[1]);
-            }
-        } 
-        
-        else if (args.length == 3) {
-            // Formato: jal rd, label
-            if (!registerMap.containsKey(args[1])) {
-                throw new Exception("Registrador inválido em instrução J: " + args[1]);
-            }
-            rd = intToBinary(registerMap.get(args[1]), 5);
-
-            try {
-                imediato = intToBinary(Integer.parseInt(args[2]), 20);
-            } 
-            catch (NumberFormatException e) {
-                throw new Exception("Erro ao converter imediato para número: " + args[2]);
-            }
-        } 
-        
-        else {
-            throw new Exception("Instrução tipo J requer 2 ou 3 argumentos: " + String.join(" ", args));
-        }
-
-        //Cálculo de deslocamento caso exista o jump
-        String label = args[args.length - 1];
-        int labelAddress = AssemblyParser.labels.get(label);
-        args[args.length - 1] = String.valueOf((labelAddress - (currentAddress+4))/2);
-
-        // Formato J: imm[20] | imm[10:1] | imm[11] | imm[19:12] | rd | opcode
-        String imm_20    = imediato.substring(0, 1);    // Bit 20
-        String imm_10_1  = imediato.substring(10, 20);  // Bits 10 a 1 (10 bits)
-        String imm_11    = imediato.substring(9, 10);   // Bit 11
-        String imm_19_12 = imediato.substring(1, 9);    // Bits 19 a 12 (8 bits)
-
-        String instruction = imm_20 + imm_10_1 + imm_11 + imm_19_12 + rd + info.getOpcode();
-        
-        if (instruction.length() != 32) {
-             throw new IllegalStateException("Erro interno no encode_j: instrução gerada não tem 32 bits. Tamanho: " + instruction.length());
-        }
-
-        return instruction;
+    if (!registerMap.containsKey(args[1]) || !registerMap.containsKey(args[2])) {
+        System.out.println("Registrador inválido em instrução B: " + String.join(" ", args));
+        throw new Exception("Registrador inválido: " + String.join(" ", args));
     }
 
+    // Verificar se é um número ou um label
+    String target = args[3];
+    int targetAddress;
+    
+    try {
+        // Tenta converter para número (endereço absoluto)
+        targetAddress = Integer.parseInt(target);
+    } catch (NumberFormatException e) {
+        // Se não é número, deve ser um label
+        Integer labelAddress = AssemblyParser.labels.get(target);
+        if (labelAddress == null) {
+            throw new Exception("Label não encontrado: " + target);
+        }
+        targetAddress = labelAddress;
+    }
+    
+    //Cálculo de deslocamento caso exista o branch
+    int offset = (targetAddress - (currentAddress + 4)) / 2;
+    
+    try {
+        // Formato B: imm[12|10:5] rs2[4:0] rs1[4:0] funct3[2:0] imm[4:1|11] opcode[6:0]
+        String immBinary = intToBinary(offset, 13); // 13 bits para incluir o bit 12
+        String rs2 = intToBinary(registerMap.get(args[2]), 5);
+        String rs1 = intToBinary(registerMap.get(args[1]), 5);
+        
+        String imm_12 = immBinary.substring(0, 1);      // bit 12
+        String imm_10_5 = immBinary.substring(2, 8);    // bits 10:5
+        String imm_4_1 = immBinary.substring(8, 12);    // bits 4:1
+        String imm_11 = immBinary.substring(1, 2);      // bit 11
+        
+        String instruction = imm_12 + imm_10_5 + rs2 + rs1 + info.getFunct3() + imm_4_1 + imm_11 + info.getOpcode();
 
+        return instruction;
+    } catch (NumberFormatException e) {
+        System.out.println("Erro ao converter imediato para número: " + args[3]);
+        return ("-1");
+        }
+}
+    
+    private static String encode_j(String[] args, InstructionInfo info, int currentAddress) throws Exception {
+    
+    String rd;
+    String imediato;
+    
+    if (args.length == 2) {
+        // Formato: j label (pseudo-instrução, equivale a jal x0, label)
+        rd = intToBinary(0, 5); // x0 (zero register)
+        
+        // Verificar se é um número ou um label
+        String target = args[1];
+        int targetAddress;
+        
+        try {
+            // Tenta converter para número (endereço absoluto)
+            targetAddress = Integer.parseInt(target);
+        } catch (NumberFormatException e) {
+            // Se não é número, deve ser um label
+            Integer labelAddress = AssemblyParser.labels.get(target);
+            if (labelAddress == null) {
+                throw new Exception("Label não encontrado: " + target);
+            }
+            targetAddress = labelAddress;
+        }
+        
+        //Cálculo de deslocamento caso exista o jump
+        int offset = (targetAddress - (currentAddress + 4)) / 2;
+        imediato = intToBinary(offset, 20);
+    } 
+    else if (args.length == 3) {
+        // Formato: jal rd, label
+        if (!registerMap.containsKey(args[1])) {
+            throw new Exception("Registrador inválido em instrução J: " + args[1]);
+        }
+        rd = intToBinary(registerMap.get(args[1]), 5);
+        
+        // Verificar se é um número ou um label
+        String target = args[2];
+        int targetAddress;
+        
+        try {
+            // Tenta converter para número (endereço absoluto)
+            targetAddress = Integer.parseInt(target);
+        } catch (NumberFormatException e) {
+            // Se não é número, deve ser um label
+            Integer labelAddress = AssemblyParser.labels.get(target);
+            if (labelAddress == null) {
+                throw new Exception("Label não encontrado: " + target);
+            }
+            targetAddress = labelAddress;
+        }
+        
+        //Cálculo de deslocamento caso exista o jump
+        int offset = (targetAddress - (currentAddress + 4)) / 2;
+        imediato = intToBinary(offset, 20);
+    } 
+    else {
+        throw new Exception("Instrução tipo J requer 2 ou 3 argumentos: " + String.join(" ", args));
+    }
+
+    // Formato J: imm[20] | imm[10:1] | imm[11] | imm[19:12] | rd | opcode
+    String imm_20    = imediato.substring(0, 1);    // Bit 20
+    String imm_10_1  = imediato.substring(10, 20);  // Bits 10 a 1 (10 bits)
+    String imm_11    = imediato.substring(9, 10);   // Bit 11
+    String imm_19_12 = imediato.substring(1, 9);    // Bits 19 a 12 (8 bits)
+
+    String instruction = imm_20 + imm_10_1 + imm_11 + imm_19_12 + rd + info.getOpcode();
+    
+    if (instruction.length() != 32) {
+         throw new IllegalStateException("Erro interno no encode_j: instrução gerada não tem 32 bits. Tamanho: " + instruction.length());
+    }
+
+    return (instruction);
 }
 
 
+}
