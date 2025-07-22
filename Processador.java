@@ -57,7 +57,7 @@ public class Processador {
             AssemblyParser.parseFile(nome_arquivo);
             Pipeline.setPc(0);
 
-            for(int i = 0; i < 15; i++){ // Aumentar de 7 para 10
+            for(int i = 0; i < 6; i++){ // Aumentar de 7 para 10
                 Pipeline.runCycle();
                 
                 // CAPTURAR OS REGISTRADORES ATUALIZADOS A CADA CICLO
